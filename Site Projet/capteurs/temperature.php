@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>One Page Wonder - Start Bootstrap Template</title>
+        <title>Température</title>
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
@@ -19,25 +19,25 @@
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
             <div class="container px-5">
-                <a class="navbar-brand" href="index.php">Site Projet</a>
+                <a class="navbar-brand" href="../index.php">Site Projet</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a class="nav-link" href="#!">S'inscrire</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">Se Connecter</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../register.php">S'inscrire</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../login.php">Se Connecter</a></li>
                     </ul>
-                    <a class="navbar-brand" href="index.php">CRUD</a>
+                    <a class="navbar-brand" href="../index.php">CRUD</a>
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a class="nav-link" href="./CRUD/create.php">Create</a></li>
-                        <li class="nav-item"><a class="nav-link" href="./CRUD/read.php">Read</a></li>
-                        <li class="nav-item"><a class="nav-link" href="./CRUD/update.php">Update</a></li>
-                        <li class="nav-item"><a class="nav-link" href="./CRUD/delete.php">Delete</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../CRUD/create.php">Create</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../CRUD/read.php">Read</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../CRUD/update.php">Update</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../CRUD/delete.php">Delete</a></li>
                     </ul>
-                    <a class="navbar-brand" href="index.php">Capteurs</a>
+                    <a class="navbar-brand" href="../index.php">Capteurs</a>
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a class="nav-link" href="./capteurs/humidite.php">Humidité</a></li>
-                        <li class="nav-item"><a class="nav-link" href="./capteurs/temperature.php">Température</a></li>
-                        <li class="nav-item"><a class="nav-link" href="./capteurs/luminosite.php">Luminosité</a></li>
+                        <li class="nav-item"><a class="nav-link" href="humidite.php">Humidité</a></li>
+                        <li class="nav-item"><a class="nav-link" href="temperature.php">Température</a></li>
+                        <li class="nav-item"><a class="nav-link" href="luminosite.php">Luminosité</a></li>
                     </ul>
                 </div>
             </div>
@@ -46,9 +46,8 @@
         <header class="masthead text-center text-white">
             <div class="masthead-content">
                 <div class="container px-5">
-                    <h1 class="masthead-heading mb-0">Projet Ferme du moulin</h1>
-                    <h2 class="masthead-subheading mb-0">Bordrez - Dechir - Foure</h2>
-                    <a class="btn btn-primary btn-xl rounded-pill mt-5" href="#scroll">En savoir plus</a>
+                    <h1 class="masthead-heading mb-0">Capteur de température</h1>
+                    <a class="btn btn-primary btn-xl rounded-pill mt-5" href="#scroll">Temperature : </a>
                 </div>
             </div>
             <div class="bg-circle-1 bg-circle"></div>
