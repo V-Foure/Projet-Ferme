@@ -4,13 +4,11 @@
         private $id_;
         private $login_;
         private $password_;
-        private $isAdmin_ = false;
         
-        public function __construct($id,$login,$password,$isAdmin){
+        public function __construct($id,$login,$password){
             $this->id_ = $id;
             $this->login_ = $login;
             $this->password_ = $password;
-            $this->isAdmin = $isAdmin;
         }
 
         public function seConnecter($login,$password){

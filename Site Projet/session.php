@@ -4,7 +4,7 @@ include("./classes/user.php");
     $TheUser =new User(null,null,null,null);
 
     try{
-        $ipServer = "192.168.65.34";
+        $ipServer = "192.168.64.84";
         $nomBase = "Ferme";
         $login = "root";
         $password = "root";
