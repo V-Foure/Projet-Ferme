@@ -19,12 +19,25 @@
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
             <div class="container px-5">
-                <a class="navbar-brand" href="#page-top">Start Bootstrap</a>
+                <a class="navbar-brand" href="index.php">Site Projet</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a class="nav-link" href="#!">Sign Up</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">Log In</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#!">S'inscrire</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#!">Se Connecter</a></li>
+                    </ul>
+                    <a class="navbar-brand" href="index.php">CRUD</a>
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="./CRUD/create.php">Create</a></li>
+                        <li class="nav-item"><a class="nav-link" href="./CRUD/read.php">Read</a></li>
+                        <li class="nav-item"><a class="nav-link" href="./CRUD/update.php">Update</a></li>
+                        <li class="nav-item"><a class="nav-link" href="./CRUD/delete.php">Delete</a></li>
+                    </ul>
+                    <a class="navbar-brand" href="index.php">Capteurs</a>
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="./capteurs/humidite.php">Humidité</a></li>
+                        <li class="nav-item"><a class="nav-link" href="./capteurs/temperature.php">Température</a></li>
+                        <li class="nav-item"><a class="nav-link" href="./capteurs/luminosite.php">Luminosité</a></li>
                     </ul>
                 </div>
             </div>
@@ -35,7 +48,7 @@
                 <div class="container px-5">
                     <h1 class="masthead-heading mb-0">Projet Ferme du moulin</h1>
                     <h2 class="masthead-subheading mb-0">Bordrez - Dechir - Foure</h2>
-                    <a class="btn btn-primary btn-xl rounded-pill mt-5" href="#scroll">Learn More</a>
+                    <a class="btn btn-primary btn-xl rounded-pill mt-5" href="#scroll">En savoir plus</a>
                 </div>
             </div>
             <div class="bg-circle-1 bg-circle"></div>
