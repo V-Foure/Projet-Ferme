@@ -26,14 +26,14 @@
                         <li class="nav-item"><a class="nav-link" href="../register.php">S'inscrire</a></li>
                         <li class="nav-item"><a class="nav-link" href="../login.php">Se Connecter</a></li>
                     </ul>
-                    <a class="navbar-brand" href="../index.php">CRUD</a>
+                    <a class="navbar-brand" href="crud.php">CRUD</a>
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" href="create.php">Create</a></li>
                         <li class="nav-item"><a class="nav-link" href="read.php">Read</a></li>
                         <li class="nav-item"><a class="nav-link" href="update.php">Update</a></li>
                         <li class="nav-item"><a class="nav-link" href="delete.php">Delete</a></li>
                     </ul>
-                    <a class="navbar-brand" href="../index.php">Capteurs</a>
+                    <a class="navbar-brand" href="../capteurs/capteur.php">Capteurs</a>
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" href="../capteurs/humidite.php">Humidité</a></li>
                         <li class="nav-item"><a class="nav-link" href="../capteurs/temperature.php">Température</a></li>
@@ -46,7 +46,8 @@
         <header class="masthead text-center text-white">
             <div class="masthead-content">
                 <div class="container px-5">
-                    <h1 class="masthead-heading mb-0">Liste des poulets</h1>      
+                    <h1 class="masthead-heading mb-0">Read</h1> 
+                    <h1>afficher la liste des poulets !</h1>
                 </div>
             </div>
             <div class="bg-circle-1 bg-circle"></div>

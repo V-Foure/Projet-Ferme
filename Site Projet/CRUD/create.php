@@ -26,14 +26,14 @@
                         <li class="nav-item"><a class="nav-link" href="../register.php">S'inscrire</a></li>
                         <li class="nav-item"><a class="nav-link" href="../login.php">Se Connecter</a></li>
                     </ul>
-                    <a class="navbar-brand" href="../index.php">CRUD</a>
+                    <a class="navbar-brand" href="crud.php">CRUD</a>
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" href="create.php">Create</a></li>
                         <li class="nav-item"><a class="nav-link" href="read.php">Read</a></li>
                         <li class="nav-item"><a class="nav-link" href="update.php">Update</a></li>
                         <li class="nav-item"><a class="nav-link" href="delete.php">Delete</a></li>
                     </ul>
-                    <a class="navbar-brand" href="../index.php">Capteurs</a>
+                    <a class="navbar-brand" href="../capteurs/capteur.php">Capteurs</a>
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" href="../capteurs/humidite.php">Humidité</a></li>
                         <li class="nav-item"><a class="nav-link" href="../capteurs/temperature.php">Température</a></li>
@@ -46,13 +46,27 @@
         <header class="masthead text-center text-white">
             <div class="masthead-content">
                 <div class="container px-5">
-                    <h1 class="masthead-heading mb-0">Créer un poulet</h1>
-                    <a class="btn btn-primary btn-xl rounded-pill mt-5" href="#scroll">Id : <input type="text"></a>
-                    <a class="btn btn-primary btn-xl rounded-pill mt-5" href="#scroll">Poids : <input type="text"></a>
-                    <a class="btn btn-primary btn-xl rounded-pill mt-5" href="#scroll">Âge : <input type="text"></a>
-                    <a class="btn btn-primary btn-xl rounded-pill mt-5" href="#scroll">Etat : <input type="text"></a>
-                    <a class="btn btn-primary btn-xl rounded-pill mt-5" href="#scroll">Marquage : <input type="text"></a>
-                    <button class="btn btn-primary btn-xl rounded-pill mt-5">Ajouter</button>     
+                    <h1 class="masthead-heading mb-0">Create</h1>
+                    <form action="" method="post">
+                        <div>
+                            <label class="btn btn-primary btn-xl rounded-pill mt-5" href="#scroll" for="id">Id : <input type="text" id="id" name="id"></label>
+                        </div>
+                        <div>
+                            <label class="btn btn-primary btn-xl rounded-pill mt-5" href="#scroll" for="poids">Poids : <input type="poids" id="poids" name="poids"></label>
+                        </div>
+                        <div>
+                            <label class="btn btn-primary btn-xl rounded-pill mt-5" href="#scroll" for="age">Âge : <input type="age" id="age" name="age"></label>
+                        </div>
+                        <div>
+                            <label class="btn btn-primary btn-xl rounded-pill mt-5" href="#scroll" for="etat">Etat : <input type="etat" id="etat" name="etat"></label>
+                        </div>
+                        <div>
+                            <label class="btn btn-primary btn-xl rounded-pill mt-5" href="#scroll" for="marquage">Marquage : <input type="marquage" id="marquage" name="poids"></label>
+                        </div>
+                        <div>
+                            <input type="submit" class="btn btn-primary btn-xl rounded-pill mt-5" value="Ajouter">
+                        </div>
+                    </form>  
                 </div>
             </div>
             <div class="bg-circle-1 bg-circle"></div>

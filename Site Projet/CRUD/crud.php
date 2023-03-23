@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Update</title>
+        <title>CRUD</title>
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
@@ -45,9 +45,14 @@
         <!-- Header-->
         <header class="masthead text-center text-white">
             <div class="masthead-content">
-                <div class="container px-5">
-                    <h1 class="masthead-heading mb-0">Update</h1>  
-                    <button class="btn btn-primary btn-xl rounded-pill mt-5">Mettre à jour</button>    
+                <div class="">
+                    <h1 class="masthead-heading mb-0">CRUD</h1>
+                    <ul>
+                        <li><a class="btn btn-primary btn-xl rounded-pill mt-5" href="create.php">Create</a></li>
+                        <li><a class="btn btn-primary btn-xl rounded-pill mt-5" href="read.php">Read</a></li>
+                        <li><a class="btn btn-primary btn-xl rounded-pill mt-5" href="update.php">Update</a></li>
+                        <li><a class="btn btn-primary btn-xl rounded-pill mt-5" href="delete.php">Delete</a></li>
+                    </ul>
                 </div>
             </div>
             <div class="bg-circle-1 bg-circle"></div>

@@ -26,14 +26,14 @@
                         <li class="nav-item"><a class="nav-link" href="../register.php">S'inscrire</a></li>
                         <li class="nav-item"><a class="nav-link" href="../login.php">Se Connecter</a></li>
                     </ul>
-                    <a class="navbar-brand" href="../index.php">CRUD</a>
+                    <a class="navbar-brand" href="../CRUD/crud.php">CRUD</a>
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" href="../CRUD/create.php">Create</a></li>
                         <li class="nav-item"><a class="nav-link" href="../CRUD/read.php">Read</a></li>
                         <li class="nav-item"><a class="nav-link" href="../CRUD/update.php">Update</a></li>
                         <li class="nav-item"><a class="nav-link" href="../CRUD/delete.php">Delete</a></li>
                     </ul>
-                    <a class="navbar-brand" href="../index.php">Capteurs</a>
+                    <a class="navbar-brand" href="capteur.php">Capteurs</a>
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" href="humidite.php">Humidité</a></li>
                         <li class="nav-item"><a class="nav-link" href="temperature.php">Température</a></li>
@@ -47,7 +47,7 @@
             <div class="masthead-content">
                 <div class="container px-5">
                     <h1 class="masthead-heading mb-0">Capteur d'humidité</h1>
-                    <a class="btn btn-primary btn-xl rounded-pill mt-5" href="#scroll">Taux :</a>
+                    <a class="btn btn-primary btn-xl rounded-pill mt-5" href="#scroll">Humidité :</a>
                 </div>
             </div>
             <div class="bg-circle-1 bg-circle"></div>
