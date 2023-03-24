@@ -85,7 +85,8 @@
                     <div class="col-lg-6">
                         <div class="p-5">
                             <h2 class="display-4">Présentation du système</h2>
-                            <p>Chaque mangeoire (xN) est équipée d’un nano PC pour récupérer l’info sur le poids d’un poulet et son identifiant. La mangeoire peut être auto alimentée. Elle est équipée d’un distributeur automatique de graine. Grâce au système de pesée le poulet identifié sur la balance peut avoir accès au réservoir ou non selon sa consommation de la journée en cours. Un détecteur de présence au niveau du réservoir de grain permet de voir si le poulet vient pour manger (sinon le lecteur RFID peut détecter sa présence aux alentours du mangeoire). Une fois le poulet à maturité il est marqué par un spray de peinture.</p>
+                            <p>Chaque mangeoire (xN) est équipée d’un nano PC pour récupérer l’info sur le poids d’un poulet et son identifiant. La mangeoire peut être auto alimentée. Elle est équipée d’un distributeur automatique de graine. Grâce au système de pesée le poulet identifié sur la balance peut avoir accès au réservoir ou non selon sa consommation de la journée en cours.</p>
+                            <p>Un détecteur de présence au niveau du réservoir de grain permet de voir si le poulet vient pour manger (sinon le lecteur RFID peut détecter sa présence aux alentours du mangeoire). Une fois le poulet à maturité il est marqué par un spray de peinture.</p>
                         </div>
                     </div>
                 </div>
@@ -134,10 +135,6 @@
                 </div>
             </div>
         </section>
-        <!-- Footer-->
-        <footer class="py-5 bg-black">
-            <div class="container px-5"><p class="m-0 text-center text-white small">Copyright &copy; Your Website 2022</p></div>
-        </footer>
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->

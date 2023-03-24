@@ -1,5 +1,5 @@
 <?php session_start();
-include("./classes/user.php");
+include ("./classes/user.php");
 
     $TheUser =new User(null,null,null,null);
 
@@ -18,7 +18,11 @@ include("./classes/user.php");
        $TheUser->seConnecter($_POST['login'],$_POST['password']);
     }
 
-    if(isset($_SESSION['déconnexion'])){
+    if(isset($_POST['deconnexion'])){
         $TheUser->seDeconnecter();
+    }
+
+    if(isset($_SESSION["connexion"]) && $_SESSION['connexion']==true){
+        $TheUser->setPouletById($_SESSION['id']);
     }
 ?>

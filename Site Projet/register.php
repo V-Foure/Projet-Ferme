@@ -1,5 +1,5 @@
 <?php session_start();
-include("session.php")
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -40,7 +40,7 @@ include("session.php")
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" href="./capteurs/humidite.php">Humidité</a></li>
                         <li class="nav-item"><a class="nav-link" href="./capteurs/temperature.php">Température</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../capteurs/luminosite.php">Luminosité</a></li>
+                        <li class="nav-item"><a class="nav-link" href="./capteurs/luminosite.php">Luminosité</a></li>
                     </ul>
                 </div>
             </div>

@@ -5,8 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Update</title>
-        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <title>Read</title>
+        <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
         <!-- Google fonts-->
@@ -47,7 +47,14 @@
             <div class="masthead-content">
                 <div class="container px-5">
                     <h1 class="masthead-heading mb-0">Read</h1> 
-                    <h1>afficher la liste des poulets !</h1>
+                    <?php 
+                        $tabPoulets = $Poulet->getAllPoulet();
+                        echo "<ul>";
+                        foreach ($tabPoulets as $poulet){
+                            $poulet->renderHTML();
+                        }
+                        echo "</ul>";
+                    ?>
                 </div>
             </div>
             <div class="bg-circle-1 bg-circle"></div>
