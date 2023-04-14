@@ -3,7 +3,9 @@ include ("pdo.php");
 include ("user.php");
 include ("poulet.php");
 
-$TheUser = new User(null,null,null,null);
+$User = new User(null,null,null,null);
+$Poulet = new Poulet(null,null,null,null,null);
+$tabPoulet = $Poulet->getAllPoulet();
 ?>
 
 <!DOCTYPE html>
@@ -26,30 +28,30 @@ $TheUser = new User(null,null,null,null);
     </head>
     <body id="page-top">
         <?php
-                if(isset($_POST['connexion'])){
-                    $TheUser->seConnecter($_POST['login'],$_POST['password']);
-                }
+            if(isset($_POST['connexion'])){
+                $User->seConnecter($_POST['login'],$_POST['password']);
+            }
                 
-                if(isset($_POST['deconnexion'])){
-                    $TheUser->seDeconnecter();
-                }
+            if(isset($_POST['deconnexion'])){
+                $User->seDeconnecter();
+            }
 
-                if(!isset($_SESSION['connexion'])){
-                    $_SESSION['connexion'] = false;
-                } 
+            if(!isset($_SESSION['connexion'])){
+                $_SESSION['connexion'] = false;
+            } 
 
-                if(isset($_SESSION['connexion']) && $_SESSION['connexion']==true){
-            ?>
-        <!-- Navigation-->
+            if(isset($_SESSION['connexion']) && $_SESSION['connexion']==true){
+        ?>
+        <!-- Navigation -->
         <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
             <div class="container">
                 <a class="navbar-brand" href=""><img src="assets/img/navbar-logo.svg" alt="..." /></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                    Menu
-                    <i class="fas fa-bars ms-1"></i>
+                    Menu<i class="fas fa-bars ms-1"></i>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                        <li class="nav-item"><a class="nav-link" href="#about">A propos</a></li>
                         <li class="nav-item"><a class="nav-link" href="#create">Créer un poulet</a></li>
                         <li class="nav-item"><a class="nav-link" href="#read">Voir les poulets</a></li>
                         <li class="nav-item"><a class="nav-link" href="#update">Modifier un poulet</a></li>
@@ -67,9 +69,84 @@ $TheUser = new User(null,null,null,null);
             <div class="container">  
                 <div class="masthead-heading text-uppercase">Projet Ferme Industrielle du Moulin</div>
                 <div class="masthead-subheading">Dechir - Bordrez - Foure</div>
-                <a class="btn btn-primary btn-xl text-uppercase" href="#create">En savoir plus</a>
+                <a class="btn btn-primary btn-xl text-uppercase" href="#create">Passer "A propos"</a>
             </div>
         </header>
+        <!-- About-->
+        <section class="page-section" id="about">
+            <div class="container">
+                <div class="text-center">
+                    <h2 class="section-heading text-uppercase">A propos</h2>
+                </div>
+                <!-- Timeline -->
+                <ul class="timeline">
+                    <!-- About 1 -->
+                    <li>
+                        <div class="timeline-image"><img class="rounded-circle img-fluid" src="assets/img/about/1.jpg" alt="..." /></div>
+                        <div class="timeline-panel">
+                            <div class="timeline-heading">
+                                <h4 class="subheading">Contexte</h4>
+                            </div>
+                            <div>
+                                <p>Un poulailler industriel en plein air de 40 000 poulets pourrait bientôt être construit à Hailles</p>
+                                <p>Au sud-est d'Amiens. La mairie va consulter les 500 habitants. Les communes voisines vont également donner leur avis. Mais c'est la préfecture de la Somme qui tranchera dans quelques mois.</p>
+                                <p>Des tas de craie et de gravats surplombent le village de Hailles. C'est ici, un peu en retrait des habitations, que doit être construit un poulailler. Un projet, comme il en existe des milliers. Sauf qu'il doit accueillir 39 999 poulets exactement. A partir de 40 000 poulets, l'agriculteur à l'origine du projet de poulailler aurait dû lancer une enquête publique. Avec 39 999 poulets, une consultation publique suffit. Procédure plus courte et moins lourde.</p>
+                                <p>La société du Moulin propose au BTS SN de la Providence d’étudier une solution technique pour aider à la gestion de l’élevage. Avec identification et suivi du poids des poulets, alimentation automatique et gestion de l’environnement du poulailler.</p>
+                            </div>
+                        </div>
+                    </li>
+                    <!-- About 2 -->
+                    <li class="timeline-inverted">
+                        <div class="timeline-image"><img class="rounded-circle img-fluid" src="assets/img/about/2.jpg" alt="..." /></div>
+                        <div class="timeline-panel">
+                            <div class="timeline-heading">
+                                <h4 class="subheading">Présentation du système</h4>
+                            </div>
+                            <div>
+                                <p>Chaque mangeoire (xN) est équipée d’un nano PC pour récupérer l’info sur le poids d’un poulet et son identifiant. La mangeoire peut être auto alimentée. Elle est équipée d’un distributeur automatique de graine.</p>
+                                <p>Grâce au système de pesée le poulet identifié sur la balance peut avoir accès au réservoir ou non selon sa consommation de la journée en cours.</p>
+                                <p>Un détecteur de présence au niveau du réservoir de grain permet de voir si le poulet vient pour manger (sinon le lecteur RFID peut détecter sa présence aux alentours de la mangeoire). Une fois le poulet à maturité il est marqué par un spray de peinture.</p>
+                            </div>
+                        </div>
+                    </li>
+                    <!-- About 3 -->
+                    <li>
+                        <div class="timeline-image"><img class="rounded-circle img-fluid" src="assets/img/about/3.jpg" alt="..." /></div>
+                        <div class="timeline-panel">
+                            <div class="timeline-heading">
+                                <h4 class="subheading">Analyse de l’existant</h4>
+                            </div>
+                            <div>
+                                <p>Le producteur se doit de produire des animaux homogènes dans le temps afin de fidéliser le consommateur. La détermination d’un cahier des charges de production précis permet cette homogénéité, la répétitivité des produits étant déterminée par :</p>
+                                <p>- Le choix de la souche : en poulet fermier, utilisation de souches à croissance lente</p>
+                                <p>- Le choix de l’alimentation</p>
+                                <p>- Le choix de l’âge d’abattage : variable en fonction des espèces, pour le poulet entre 100 et 120 jours. Au sein d'une bande, il faut éviter de dépasser le délai d'un mois entre le premier et le dernier animal abattu</p>
+                                <p>- Le choix des techniques de production et du plan de prophylaxie</p>
+                                <p>- Le choix de présentation du produit</p>
+                                <p>L’élevage de volailles est soumis à la réglementation environnementale comme toutes les autres productions animales.</p>
+                                <p>En lien avec la commercialisation des volailles, la réglementation impose de mettre en place un système de traçabilité irréprochable sur l’élevage des volailles de l’achat à la commercialisation. La tenue du registre d’élevage et le remplissage de la fiche ICA à chaque lot abattu sont indispensables. Par ailleurs, à partir de 250 volailles (poulets ou dindes), le  dépistage des salmonelles est obligatoire (prélèvements en élevage et après abattage).</p>
+                                <p>Aujourd’hui un poulet peut manger autant de grain qu’il souhaite en prenant la part de son voisin. Les poulets restent élevés en extérieurs.</p>
+                            </div>
+                        </div>
+                    </li>
+                    <!-- About 4 -->
+                    <li class="timeline-inverted">
+                        <div class="timeline-image"><img class="rounded-circle img-fluid" src="assets/img/about/4.jpg" alt="..." /></div>
+                        <div class="timeline-panel">
+                            <div class="timeline-heading">
+                                <h4 class="subheading">Expression du besoin :</h4>
+                            </div>
+                            <div>
+                                <p>L’SCEA du Moulin demande au BTS SN de la Providence Amiens de proposer une maquette afin de faciliter la traçabilité sur l’élevage et contrôler l’alimentation de manière automatique. Ainsi que de fournir en temps réel des informations importantes sur la qualité de vie de la volaille</p>
+                                <p>Un poulet doit être référencé en base via une bague RFID, l’information de sa pesée doit être enregistré en base quotidiennement. Il ne peut avoir accès qu’à sa quantité de grain journalière pour produire des animaux homogènes.</p>
+                                <p>Lorsqu’un poulet atteint un certain âge, et un certain poids déterminé par le cahier des charges du consommateur. Il doit être physiquement marqué (spray peinture sur le dos).</p>
+                                <p>Des capteurs doivent permettre d’activer les systèmes de chauffe et de ventilation pour garantir des conditions optimales pour la volaille au sein du poulailler. </p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>
         <!-- Create -->
         <section class="page-section" id="create">
             <div class="container">
@@ -79,8 +156,7 @@ $TheUser = new User(null,null,null,null);
                 </div>
                 <?php 
                     if(isset($_POST["CreatePoulet"])){
-                        $newpoulet = new Poulet(null,$_POST["poids"],$_POST["age"],null,null);
-                        $newpoulet->saveInBDD();
+                        $Poulet->saveInBDD();
                     }
                 ?>
                 <form action="" method="post">
@@ -93,12 +169,13 @@ $TheUser = new User(null,null,null,null);
                             <h4 class="my-3">Age</h4>
                             <input type="text" id="age" name="age">
                         </div>
-                    </div>
-                    <div class="text-center">
-                        <input type="submit" class="btn btn-primary btn-xl rounded-pill mt-5" name="CreatePoulet" value="Ajouter">
+                        <div class="text-center">
+                            <input type="submit" class="btn btn-primary btn-xl rounded-pill mt-5" name="CreatePoulet" value="Ajouter">
+                        </div>
                     </div>
                 </form>
             </div>
+        </section>
         <!-- Read -->
         <section class="page-section" id="read">
             <div class="container">
@@ -108,10 +185,9 @@ $TheUser = new User(null,null,null,null);
                 </div>
             </div>
             <?php
-                $Poulet = new Poulet(null,null,null,null,null);
-
                 $Poulet->renderHTML();
             ?>
+        </section>
         <!-- Update -->
         <section class="page-section" id="update">
             <div class="container">
@@ -119,28 +195,62 @@ $TheUser = new User(null,null,null,null);
                     <h2 class="section-heading text-uppercase">Modifier un poulet</h2>
                     <h3 class="section-subheading text-muted">Veuillez entrer les modifications à effectuer</h3>
                 </div>
-                <div class="row text-center">
-                    <div class="col-md-3">
-                        <h4 class="my-3">Id</h4>
-                        <input>
+                <?php
+                    if(isset($_POST["idPoulet"])){
+                        $Poulet->setPouletById($_POST["idPoulet"]);
+                    }
+
+                    if(isset($_POST["UpdatePoulet"])){
+                        $Poulet->setPouletById($_POST["id"]);
+                        $Poulet->setPoids($_POST["poids"]);
+                        $Poulet->setAge($_POST["age"]);
+                        $Poulet->setEtat($_POST["etat"]);
+                        $Poulet->saveInBDD();
+                    }
+                ?>
+                <form action="" method="post">
+                    <div class="row text-center">
+                        <div class="text-center">
+                            <select name="idPoulet" id="idPoulet">
+                                <option value="null">Choisir un poulet a modifier</option>
+                <?php
+                    foreach($tabPoulet as $Poulet){
+                        if($Poulet->getId() == $Poulet){
+                            $selected = "selected";
+                        }else{
+                            $selected = "";
+                        }
+                        
+                        echo '<option '.$selected.' value="'.$Poulet->getId().'">'.$Poulet->getId().'</option>';
+                    }
+                ?>
+                    </select>
+                </form>
+
+                <form action="" method="post">
+                    <div class="row text-center">
+                        <div class="col-md-4">
+                            <h4 class="my-3">Poids</h4>
+                            <input type="text" name="poids" value="<?= $Poulet->getPoids() ?>">
+                        </div>
+                        <div class="col-md-4">
+                            <h4 class="my-3">Age</h4>
+                            <input type="text" name="id" value="<?= $Poulet->getAge() ?>">
+                        </div>
+                        <div class="col-md-4">
+                            <h4 class="my-3">Etat</h4>
+                            <input type="text" name="etat" value="<?= $Poulet->getEtat() ?>">
+                        </div>
+                        <div>
+                            <input type="hidden" name="id" value="<?= $Poulet->getId() ?>">
+                        </div>
+                        <div class="text-center">
+                            <input type="submit" class="btn btn-primary btn-xl rounded-pill mt-5" name="UpdatePoulet" value="Modifier">
+                        </div>
                     </div>
-                    <div class="col-md-3">
-                        <h4 class="my-3">Poids</h4>
-                        <input>
-                    </div>
-                    <div class="col-md-3">
-                        <h4 class="my-3">Age</h4>
-                        <input>
-                    </div>
-                    <div class="col-md-3">
-                        <h4 class="my-3">Etat</h4>
-                        <input>
-                    </div>
-                </div>
+                </form>
             </div>
-            <div class="text-center">
-                <input type="submit" class="btn btn-primary btn-xl rounded-pill mt-5" name="UpdatePoulet" value="Modifier">
-            </div>
+        </section>
         <!-- Delete -->
         <section class="page-section" id="delete">
             <div class="container">
@@ -148,18 +258,48 @@ $TheUser = new User(null,null,null,null);
                     <h2 class="section-heading text-uppercase">Supprimer un poulet</h2>
                     <h3 class="section-subheading text-muted">Veuillez entrer l'id du poulet a supprimer</h3>
                 </div>
+                <?php     
+                    if(isset($_POST["idPoulet"])){
+                        $Poulet->setPouletById($_POST["idPoulet"]);
+                        $Poulet->renderHTML();
+                    }
+
+                    if(isset($_POST["DeletePoulet"])){
+                        $Poulet->setPouletById($_POST["id"]);
+                        $Poulet->deleteInBDD();
+                    }  
+                ?>    
+                <form action="" method="post">
+                    <div class="row text-center">
+                        <div class="text-center">
+                            <select name="idPoulet" id="idPoulet">
+                                <option value="null">Choisir un poulet a supprimer</option>
+                <?php
+                    foreach($tabPoulet as $Poulet){
+                        if($Poulet->getId() == $Poulet){
+                            $selected = "selected";
+                        }else{
+                            $selected = "";
+                        }
+                        
+                        echo '<option '.$selected.' value="'.$Poulet->getId().'">'.$Poulet->getId().'</option>';
+                    }
+                ?>
+                </select>
+            </form>
+
+            <form action="" method="post">
                 <div class="row text-center">
                     <div class="text-center">
-                        <h4 class="my-3">Id</h4>
-                        <input>
+                        <input type="hidden" name="id" value="<?= $Poulet->getId() ?>">
+                    </div>
+                    <div class="text-center">
+                        <input type="submit" class="btn btn-primary btn-xl rounded-pill mt-5" name="DeletePoulet" value="Supprimer">
                     </div>
                 </div>
-            </div>
-            <div class="text-center">
-                <input type="submit" class="btn btn-primary btn-xl rounded-pill mt-5" name="DeletePoulet" value="Supprimer">
-            </div>
-            </section>
-        <!-- Cpateurs -->
+            </form>
+        </section>
+        <!-- Capteurs -->
         <section class="page-section bg-light" id="portfolio">
             <div class="container">
                 <div class="text-center">
@@ -168,169 +308,87 @@ $TheUser = new User(null,null,null,null);
                 </div>
                 <div class="row">
                     <div class="col-lg-4 col-sm-6 mb-4">
-                        <!-- Portfolio item 1-->
-                        <div class="portfolio-item">
-                            <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1">
-                                <div class="portfolio-hover">
-                                    <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
-                                </div>
-                                <img class="img-fluid" src="assets/img/portfolio/1.jpg" alt="..." />
-                            </a>
-                            <div class="portfolio-caption">
-                                <div class="portfolio-caption-heading">Capteur d'humidité</div>
+                    <!-- Capteur humidité-->
+                    <div class="portfolio-item">
+                        <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1">
+                            <div class="portfolio-hover">
+                                <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                            </div>
+                            <img class="img-fluid" src="assets/img/portfolio/1.jpg" alt="..." />
+                        </a>
+                        <div class="portfolio-caption">
+                            <div class="portfolio-caption-heading">Humidité</div>
                             </div>
                         </div>
                     </div>
-                        <div class="col-lg-4 col-sm-6 mb-4">
-                            <!-- Portfolio item 2-->
-                            <div class="portfolio-item">
-                                <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal2">
-                                    <div class="portfolio-hover">
-                                        <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
-                                    </div>
-                                    <img class="img-fluid" src="assets/img/portfolio/2.jpg" alt="..." />
-                                </a>
-                                <div class="portfolio-caption">
-                                    <div class="portfolio-caption-heading">Capteur de Luminosité</div>
-                                </div>
+                    <div class="col-lg-4 col-sm-6 mb-4">
+                    <!-- Capteur luminosité -->
+                    <div class="portfolio-item">
+                        <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal2">
+                            <div class="portfolio-hover">
+                                <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                             </div>
-                        </div>
-                        <div class="col-lg-4 col-sm-6 mb-4">
-                            <!-- Portfolio item 3-->
-                            <div class="portfolio-item">
-                                <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal3">
-                                    <div class="portfolio-hover">
-                                        <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
-                                    </div>
-                                    <img class="img-fluid" src="assets/img/portfolio/3.jpg" alt="..." />
-                                </a>
-                                <div class="portfolio-caption">
-                                    <div class="portfolio-caption-heading">Capteur de température</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-sm-6 mb-4 mb-lg-0">
-                            <!-- Portfolio item 4-->
-                            <div class="portfolio-item">
-                                <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal4">
-                                    <div class="portfolio-hover">
-                                        <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
-                                    </div>
-                                    <img class="img-fluid" src="assets/img/portfolio/4.jpg" alt="..." />
-                                </a>
-                                <div class="portfolio-caption">
-                                    <div class="portfolio-caption-heading">Capteur de présence</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-sm-6 mb-4 mb-sm-0">
-                            <!-- Portfolio item 5-->
-                            <div class="portfolio-item">
-                                <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal5">
-                                    <div class="portfolio-hover">
-                                        <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
-                                    </div>
-                                    <img class="img-fluid" src="assets/img/portfolio/5.jpg" alt="..." />
-                                </a>
-                                <div class="portfolio-caption">
-                                    <div class="portfolio-caption-heading">Southwest</div>
-                                    <div class="portfolio-caption-subheading text-muted">Website Design</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-sm-6">
-                            <!-- Portfolio item 6-->
-                            <div class="portfolio-item">
-                                <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal6">
-                                    <div class="portfolio-hover">
-                                        <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
-                                    </div>
-                                    <img class="img-fluid" src="assets/img/portfolio/6.jpg" alt="..." />
-                                </a>
-                                <div class="portfolio-caption">
-                                    <div class="portfolio-caption-heading">Window</div>
-                                    <div class="portfolio-caption-subheading text-muted">Photography</div>
-                                </div>
+                            <img class="img-fluid" src="assets/img/portfolio/2.jpg" alt="..." />
+                        </a>
+                        <div class="portfolio-caption">
+                            <div class="portfolio-caption-heading">Luminosité</div>
                             </div>
                         </div>
                     </div>
+                    <div class="col-lg-4 col-sm-6 mb-4">
+                    <!-- Capteur température -->
+                    <div class="portfolio-item">
+                        <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal3">
+                            <div class="portfolio-hover">
+                                <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                            </div>
+                            <img class="img-fluid" src="assets/img/portfolio/3.jpg" alt="..." />
+                        </a>
+                        <div class="portfolio-caption">
+                            <div class="portfolio-caption-heading">Température</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 mb-4 mb-lg-0">
+                    <!-- Capteur présence -->
+                    <div class="portfolio-item">
+                        <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal4">
+                            <div class="portfolio-hover">
+                                <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                            </div>
+                            <img class="img-fluid" src="assets/img/portfolio/4.jpg" alt="..." />
+                        </a>
+                        <div class="portfolio-caption">
+                            <div class="portfolio-caption-heading">Présence</div>
+                        </div>
+                    </div>
                 </div>
-            </section>
-            <!-- About-->
-        <section class="page-section" id="about">
-            <div class="container">
-                <div class="text-center">
-                    <h2 class="section-heading text-uppercase">About</h2>
-                    <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
-                </div>
-                <ul class="timeline">
-                    <li>
-                        <div class="timeline-image"><img class="rounded-circle img-fluid" src="assets/img/about/1.jpg" alt="..." /></div>
-                        <div class="timeline-panel">
-                            <div class="timeline-heading">
-                                <h4>2009-2011</h4>
-                                <h4 class="subheading">Our Humble Beginnings</h4>
-                            </div>
-                            <div class="timeline-body"><p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</p></div>
-                        </div>
-                    </li>
-                    <li class="timeline-inverted">
-                        <div class="timeline-image"><img class="rounded-circle img-fluid" src="assets/img/about/2.jpg" alt="..." /></div>
-                        <div class="timeline-panel">
-                            <div class="timeline-heading">
-                                <h4>March 2011</h4>
-                                <h4 class="subheading">An Agency is Born</h4>
-                            </div>
-                            <div class="timeline-body"><p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</p></div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="timeline-image"><img class="rounded-circle img-fluid" src="assets/img/about/3.jpg" alt="..." /></div>
-                        <div class="timeline-panel">
-                            <div class="timeline-heading">
-                                <h4>December 2015</h4>
-                                <h4 class="subheading">Transition to Full Service</h4>
-                            </div>
-                            <div class="timeline-body"><p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</p></div>
-                        </div>
-                    </li>
-                    <li class="timeline-inverted">
-                        <div class="timeline-image"><img class="rounded-circle img-fluid" src="assets/img/about/4.jpg" alt="..." /></div>
-                        <div class="timeline-panel">
-                            <div class="timeline-heading">
-                                <h4>July 2020</h4>
-                                <h4 class="subheading">Phase Two Expansion</h4>
-                            </div>
-                            <div class="timeline-body"><p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</p></div>
-                        </div>
-                    </li>
-                    <li class="timeline-inverted">
-                        <div class="timeline-image">
-                            <h4>
-                                Be Part
-                                <br />
-                                Of Our
-                                <br />
-                                Story!
-                            </h4>
-                        </div>
-                    </li>
-                </ul>
             </div>
         </section>
+
+
+
+
+
+
+
+
+
+
+
         <!-- Team-->
         <section class="page-section bg-light" id="team">
             <div class="container">
                 <div class="text-center">
-                    <h2 class="section-heading text-uppercase">Our Amazing Team</h2>
-                    <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+                    <h2 class="section-heading text-uppercase">Projet Ferme du Moulin</h2>
+                    <h3 class="section-subheading text-muted">Étudiants chargés du projet</h3>
                 </div>
                 <div class="row">
                     <div class="col-lg-4">
                         <div class="team-member">
                             <img class="mx-auto rounded-circle" src="assets/img/team/1.jpg" alt="..." />
-                            <h4>Parveen Anand</h4>
-                            <p class="text-muted">Lead Designer</p>
+                            <h4>Mathys Dechir</h4>
+                            <p class="text-muted">Etudiant 1</p>
                             <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Parveen Anand Twitter Profile"><i class="fab fa-twitter"></i></a>
                             <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Parveen Anand Facebook Profile"><i class="fab fa-facebook-f"></i></a>
                             <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Parveen Anand LinkedIn Profile"><i class="fab fa-linkedin-in"></i></a>
@@ -339,8 +397,8 @@ $TheUser = new User(null,null,null,null);
                     <div class="col-lg-4">
                         <div class="team-member">
                             <img class="mx-auto rounded-circle" src="assets/img/team/2.jpg" alt="..." />
-                            <h4>Diana Petersen</h4>
-                            <p class="text-muted">Lead Marketer</p>
+                            <h4>Elliot Bordrez</h4>
+                            <p class="text-muted">Etudiant 2</p>
                             <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Diana Petersen Twitter Profile"><i class="fab fa-twitter"></i></a>
                             <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Diana Petersen Facebook Profile"><i class="fab fa-facebook-f"></i></a>
                             <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Diana Petersen LinkedIn Profile"><i class="fab fa-linkedin-in"></i></a>
@@ -349,8 +407,8 @@ $TheUser = new User(null,null,null,null);
                     <div class="col-lg-4">
                         <div class="team-member">
                             <img class="mx-auto rounded-circle" src="assets/img/team/3.jpg" alt="..." />
-                            <h4>Larry Parker</h4>
-                            <p class="text-muted">Lead Developer</p>
+                            <h4>Valentin Foure</h4>
+                            <p class="text-muted">Etudiant 3</p>
                             <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Larry Parker Twitter Profile"><i class="fab fa-twitter"></i></a>
                             <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Larry Parker Facebook Profile"><i class="fab fa-facebook-f"></i></a>
                             <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Larry Parker LinkedIn Profile"><i class="fab fa-linkedin-in"></i></a>
@@ -358,7 +416,7 @@ $TheUser = new User(null,null,null,null);
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-8 mx-auto text-center"><p class="large text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut eaque, laboriosam veritatis, quos non quis ad perspiciatis, totam corporis ea, alias ut unde.</p></div>
+                    <div class="col-lg-8 mx-auto text-center"><p class="large text-muted">?</p></div>
                 </div>
             </div>
         </section>
@@ -381,75 +439,10 @@ $TheUser = new User(null,null,null,null);
                 </div>
             </div>
         </div>
-        <!-- Contact-->
-        <section class="page-section" id="contact">
-            <div class="container">
-                <div class="text-center">
-                    <h2 class="section-heading text-uppercase">Contact Us</h2>
-                    <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
-                </div>
-                <!-- * * * * * * * * * * * * * * *-->
-                <!-- * * SB Forms Contact Form * *-->
-                <!-- * * * * * * * * * * * * * * *-->
-                <!-- This form is pre-integrated with SB Forms.-->
-                <!-- To make this form functional, sign up at-->
-                <!-- https://startbootstrap.com/solution/contact-forms-->
-                <!-- to get an API token!-->
-                <form id="contactForm" data-sb-form-api-token="API_TOKEN">
-                    <div class="row align-items-stretch mb-5">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <!-- Name input-->
-                                <input class="form-control" id="name" type="text" placeholder="Your Name *" data-sb-validations="required" />
-                                <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
-                            </div>
-                            <div class="form-group">
-                                <!-- Email address input-->
-                                <input class="form-control" id="email" type="email" placeholder="Your Email *" data-sb-validations="required,email" />
-                                <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
-                                <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
-                            </div>
-                            <div class="form-group mb-md-0">
-                                <!-- Phone number input-->
-                                <input class="form-control" id="phone" type="tel" placeholder="Your Phone *" data-sb-validations="required" />
-                                <div class="invalid-feedback" data-sb-feedback="phone:required">A phone number is required.</div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group form-group-textarea mb-md-0">
-                                <!-- Message input-->
-                                <textarea class="form-control" id="message" placeholder="Your Message *" data-sb-validations="required"></textarea>
-                                <div class="invalid-feedback" data-sb-feedback="message:required">A message is required.</div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Submit success message-->
-                    <!---->
-                    <!-- This is what your users will see when the form-->
-                    <!-- has successfully submitted-->
-                    <div class="d-none" id="submitSuccessMessage">
-                        <div class="text-center text-white mb-3">
-                            <div class="fw-bolder">Form submission successful!</div>
-                            To activate this form, sign up at
-                            <br />
-                            <a href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
-                        </div>
-                    </div>
-                    <!-- Submit error message-->
-                    <!---->
-                    <!-- This is what your users will see when there is-->
-                    <!-- an error submitting the form-->
-                    <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
-                    <!-- Submit Button-->
-                    <div class="text-center"><button class="btn btn-primary btn-xl text-uppercase disabled" id="submitButton" type="submit">Send Message</button></div>
-                </form>
-            </div>
-        </section>
         <!-- Footer-->
         <footer class="footer py-4">
             <div class="container">
                 <div class="row align-items-center">
-                    <div class="col-lg-4 text-lg-start">Copyright &copy; Your Website 2023</div>
                     <div class="col-lg-4 my-3 my-lg-0">
                         <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
                         <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
@@ -473,8 +466,8 @@ $TheUser = new User(null,null,null,null);
                             <div class="col-lg-8">
                                 <div class="modal-body">
                                     <!-- Project details-->
-                                    <h2 class="text-uppercase">Project Name</h2>
-                                    <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
+                                    <h2 class="text-uppercase">Taux d'humidité</h2>
+                                    <p class="item-intro text-muted"><!-- Mesure Capteur Luminosité -->%</p>
                                     <img class="img-fluid d-block mx-auto" src="assets/img/portfolio/1.jpg" alt="..." />
                                     <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
                                     <ul class="list-inline">
@@ -508,8 +501,8 @@ $TheUser = new User(null,null,null,null);
                             <div class="col-lg-8">
                                 <div class="modal-body">
                                     <!-- Project details-->
-                                    <h2 class="text-uppercase">Project Name</h2>
-                                    <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
+                                    <h2 class="text-uppercase">Taux de luminosité</h2>
+                                    <p class="item-intro text-muted"><!-- Mesure Capteur Humidté -->%</p>
                                     <img class="img-fluid d-block mx-auto" src="assets/img/portfolio/2.jpg" alt="..." />
                                     <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
                                     <ul class="list-inline">
@@ -590,76 +583,6 @@ $TheUser = new User(null,null,null,null);
                                         <li>
                                             <strong>Category:</strong>
                                             Branding
-                                        </li>
-                                    </ul>
-                                    <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
-                                        <i class="fas fa-xmark me-1"></i>
-                                        Close Project
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Portfolio item 5 modal popup-->
-        <div class="portfolio-modal modal fade" id="portfolioModal5" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg" alt="Close modal" /></div>
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-8">
-                                <div class="modal-body">
-                                    <!-- Project details-->
-                                    <h2 class="text-uppercase">Project Name</h2>
-                                    <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
-                                    <img class="img-fluid d-block mx-auto" src="assets/img/portfolio/5.jpg" alt="..." />
-                                    <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
-                                    <ul class="list-inline">
-                                        <li>
-                                            <strong>Client:</strong>
-                                            Southwest
-                                        </li>
-                                        <li>
-                                            <strong>Category:</strong>
-                                            Website Design
-                                        </li>
-                                    </ul>
-                                    <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
-                                        <i class="fas fa-xmark me-1"></i>
-                                        Close Project
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Portfolio item 6 modal popup-->
-        <div class="portfolio-modal modal fade" id="portfolioModal6" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg" alt="Close modal" /></div>
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-8">
-                                <div class="modal-body">
-                                    <!-- Project details-->
-                                    <h2 class="text-uppercase">Project Name</h2>
-                                    <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
-                                    <img class="img-fluid d-block mx-auto" src="assets/img/portfolio/6.jpg" alt="..." />
-                                    <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
-                                    <ul class="list-inline">
-                                        <li>
-                                            <strong>Client:</strong>
-                                            Window
-                                        </li>
-                                        <li>
-                                            <strong>Category:</strong>
-                                            Photography
                                         </li>
                                     </ul>
                                     <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">

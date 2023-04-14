@@ -18,7 +18,19 @@
         public function setPouletById($id){
             $requestSql = "SELECT * FROM `poulet`
                 WHERE `id` = '".$id."'";
+            
+            $resultat = $GLOBALS["pdo"]->query($requestSql);
+            
+            if($resultat->rowCount()>0){
+                $tab=$resultat->fetch();
+                $this->id_ = $tab['id'];
+                $this->poids_ = $tab['poids'];
+                $this->age_ = $tab['age'];
+                $this->etat_ = $tab['etat'];
+                $this->marquage_ = $tab['marquage'];
+            }
         }
+        
 
         public function getAllPoulet(){
             $ListPoulets = array();
@@ -28,15 +40,19 @@
             $resultat = $GLOBALS["pdo"]->query($requestSql);
 
             while($tab=$resultat->fetch()){
-                $lepoulet = new Poulet($tab['id'],$tab['poids'],$tab['age'],$tab['etat'],$tab['marquage']);
-                array_push($ListPoulets,$lepoulet);
+                $newpoulet = new Poulet($tab['id'],$tab['poids'],$tab['age'],$tab['etat'],$tab['marquage']);
+                array_push($ListPoulets,$newpoulet);
             }
 
             return $ListPoulets;
         }
         
         public function lastInsertId(){
+            //
+        }
 
+        public function getId(){
+            return $this->id_;
         }
         
         public function getPoids(){
@@ -56,13 +72,38 @@
         }
 
         public function saveInBDD(){
+
+            $poids = addslashes($this->poids_);
+            $age = addslashes($this->age_);
+            $etat = addslashes($this->etat_);
+
             if(is_null($this->id_)){
-                $requestSql = "INSERT INTO `poulet` (`poids`,`age`) VALUES ('".$this->poids_."','".$this->age_."')";
+                $requestSql = "INSERT INTO `poulet` 
+                (`poids`,`age`,`etat`)
+                VALUES 
+                ('".$poids."','".$age."','".$etat."')";
 
                 $resultat = $GLOBALS["pdo"]->query($requestSql);
                 $this->id_ = $GLOBALS["pdo"]->lastInsertId();
             }else{
-                //UPDATE
+                echo "Tu as mis à jour le poulet n°".$this->id_;
+
+                $requestSql = "UPDATE  `poulet` SET 
+                `poids`='".$this->poids_."',
+                `age`='".$this->age_."',
+                `etat`='".$this->etat_."',
+                WHERE `id` ='".$this->id_."'";
+                $resultat = $GLOBALS["pdo"]->query($requestSql);
+            }
+        }
+
+        public function deleteInBDD(){
+            if(is_null($this->id_)){
+                $requestSql = "DELETE FROM `poulet` 
+                WHERE
+                id ='".$this->$id_."'";
+
+                $GLOBALS["pdo"]->query($requestSql);
             }
         }
 
@@ -99,6 +140,18 @@
             ?>
                 </table>
             <?php
+        }
+
+        public function setPoids($poids){
+            $this->poids_ = $poids;
+        }
+
+        public function setAge($age){
+            $this->age_ = $age;
+        }
+
+        public function setEtat($etat){
+            $this->etat_ = $etat;
         }
     }
 ?>
