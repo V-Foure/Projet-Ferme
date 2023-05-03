@@ -3,8 +3,8 @@ include ("pdo.php");
 include ("user.php");
 include ("poulet.php");
 
-$User = new User(null,null,null,null);
-$Poulet = new Poulet(null,null,null,null,null);
+$User = new User(null,null,null);
+$Poulet = new Poulet(null,$_POST["poids"],$_POST["age"],$_POST["etat"],$_POST["marquage"]);
 $tabPoulet = $Poulet->getAllPoulet();
 ?>
 
@@ -41,6 +41,10 @@ $tabPoulet = $Poulet->getAllPoulet();
             } 
 
             if(isset($_SESSION['connexion']) && $_SESSION['connexion']==true){
+        
+            if(isset($_POST["idPoulet"])){
+                $Poulet->setPouletById($_POST["idPoulet"]);
+            }
         ?>
         <!-- Navigation -->
         <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
@@ -56,8 +60,8 @@ $tabPoulet = $Poulet->getAllPoulet();
                         <li class="nav-item"><a class="nav-link" href="#read">Voir les poulets</a></li>
                         <li class="nav-item"><a class="nav-link" href="#update">Modifier un poulet</a></li>
                         <li class="nav-item"><a class="nav-link" href="#delete">Supprimer un poulet</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#capteur">Capteurs</a></li>
-                        <form action = "" method = "POST">
+                        <li class="nav-item"><a class="nav-link" href="#portfolio">Capteurs</a></li>
+                        <form action="" method="post">
                             <input class="btn btn-primary" type ="submit" name ="deconnexion" value="Deconnexion"/>
                         </form>
                     </ul>
@@ -169,6 +173,14 @@ $tabPoulet = $Poulet->getAllPoulet();
                             <h4 class="my-3">Age</h4>
                             <input type="text" id="age" name="age">
                         </div>
+                        <div class="col-md-6">
+                            <h4 class="my-3">Etat</h4>
+                            <input type="text" id="etat" name="etat">
+                        </div>
+                        <div class="col-md-6">
+                            <h4 class="my-3">Marquage</h4>
+                            <input type="text" id="marquage" name="marquage">
+                        </div>
                         <div class="text-center">
                             <input type="submit" class="btn btn-primary btn-xl rounded-pill mt-5" name="CreatePoulet" value="Ajouter">
                         </div>
@@ -196,56 +208,58 @@ $tabPoulet = $Poulet->getAllPoulet();
                     <h3 class="section-subheading text-muted">Veuillez entrer les modifications à effectuer</h3>
                 </div>
                 <?php
-                    if(isset($_POST["idPoulet"])){
-                        $Poulet->setPouletById($_POST["idPoulet"]);
-                    }
-
                     if(isset($_POST["UpdatePoulet"])){
-                        $Poulet->setPouletById($_POST["id"]);
                         $Poulet->setPoids($_POST["poids"]);
                         $Poulet->setAge($_POST["age"]);
                         $Poulet->setEtat($_POST["etat"]);
+                        $Poulet->setMarquage($_POST["marquage"]);
                         $Poulet->saveInBDD();
                     }
                 ?>
-                <form action="" method="post">
+                <form action="" method="post" onchange="this.submit()">
                     <div class="row text-center">
                         <div class="text-center">
                             <select name="idPoulet" id="idPoulet">
-                                <option value="null">Choisir un poulet a modifier</option>
-                <?php
-                    foreach($tabPoulet as $Poulet){
-                        if($Poulet->getId() == $Poulet){
-                            $selected = "selected";
-                        }else{
-                            $selected = "";
-                        }
-                        
-                        echo '<option '.$selected.' value="'.$Poulet->getId().'">'.$Poulet->getId().'</option>';
-                    }
-                ?>
-                    </select>
+                                <option value="null"> - Choisir un poulet a modifier - </option>
+                                    <?php
+                                        foreach($tabPoulet as $ThePoulet){
+                                            if($Poulet->getId() == $ThePoulet->getId()){
+                                                $selected = "selected";
+                                            }else{
+                                                $selected = "";
+                                            }
+                                            
+                                            echo '<option '.$selected.' value="'.$ThePoulet->getId().'">'.$ThePoulet->getId().'</option>';
+                                        }
+                                    ?>
+                            </select>
+                        </div>
+                    </div>
                 </form>
 
                 <form action="" method="post">
                     <div class="row text-center">
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <h4 class="my-3">Poids</h4>
                             <input type="text" name="poids" value="<?= $Poulet->getPoids() ?>">
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <h4 class="my-3">Age</h4>
-                            <input type="text" name="id" value="<?= $Poulet->getAge() ?>">
+                            <input type="text" name="age" value="<?= $Poulet->getAge() ?>">
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <h4 class="my-3">Etat</h4>
                             <input type="text" name="etat" value="<?= $Poulet->getEtat() ?>">
+                        </div>
+                        <div class="col-md-6">
+                            <h4 class="my-3">Marquage</h4>
+                            <input type="text" name="marquage" value="<?= $Poulet->getMarquage() ?>">
                         </div>
                         <div>
                             <input type="hidden" name="id" value="<?= $Poulet->getId() ?>">
                         </div>
                         <div class="text-center">
-                            <input type="submit" class="btn btn-primary btn-xl rounded-pill mt-5" name="UpdatePoulet" value="Modifier">
+                            <input type="submit" class="btn btn-primary btn-xl rounded-pill mt-5" name="UpdatePoulet" value="Modifier"> 
                         </div>
                     </div>
                 </form>
@@ -259,13 +273,7 @@ $tabPoulet = $Poulet->getAllPoulet();
                     <h3 class="section-subheading text-muted">Veuillez entrer l'id du poulet a supprimer</h3>
                 </div>
                 <?php     
-                    if(isset($_POST["idPoulet"])){
-                        $Poulet->setPouletById($_POST["idPoulet"]);
-                        $Poulet->renderHTML();
-                    }
-
                     if(isset($_POST["DeletePoulet"])){
-                        $Poulet->setPouletById($_POST["id"]);
                         $Poulet->deleteInBDD();
                     }  
                 ?>    
@@ -273,16 +281,16 @@ $tabPoulet = $Poulet->getAllPoulet();
                     <div class="row text-center">
                         <div class="text-center">
                             <select name="idPoulet" id="idPoulet">
-                                <option value="null">Choisir un poulet a supprimer</option>
+                                <option value="null"> - Choisir un poulet a supprimer - </option>
                 <?php
-                    foreach($tabPoulet as $Poulet){
-                        if($Poulet->getId() == $Poulet){
+                    foreach($tabPoulet as $ThePoulet){
+                        if($Poulet->getId() == $ThePoulet){
                             $selected = "selected";
                         }else{
                             $selected = "";
                         }
                         
-                        echo '<option '.$selected.' value="'.$Poulet->getId().'">'.$Poulet->getId().'</option>';
+                        echo '<option '.$selected.' value="'.$ThePoulet->getId().'">'.$ThePoulet->getId().'</option>';
                     }
                 ?>
                 </select>
@@ -365,22 +373,11 @@ $tabPoulet = $Poulet->getAllPoulet();
                 </div>
             </div>
         </section>
-
-
-
-
-
-
-
-
-
-
-
         <!-- Team-->
         <section class="page-section bg-light" id="team">
             <div class="container">
                 <div class="text-center">
-                    <h2 class="section-heading text-uppercase">Projet Ferme du Moulin</h2>
+                    <h2 class="section-heading text-uppercase">Equipe du Projet</h2>
                     <h3 class="section-subheading text-muted">Étudiants chargés du projet</h3>
                 </div>
                 <div class="row">
@@ -389,9 +386,6 @@ $tabPoulet = $Poulet->getAllPoulet();
                             <img class="mx-auto rounded-circle" src="assets/img/team/1.jpg" alt="..." />
                             <h4>Mathys Dechir</h4>
                             <p class="text-muted">Etudiant 1</p>
-                            <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Parveen Anand Twitter Profile"><i class="fab fa-twitter"></i></a>
-                            <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Parveen Anand Facebook Profile"><i class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Parveen Anand LinkedIn Profile"><i class="fab fa-linkedin-in"></i></a>
                         </div>
                     </div>
                     <div class="col-lg-4">
@@ -399,9 +393,6 @@ $tabPoulet = $Poulet->getAllPoulet();
                             <img class="mx-auto rounded-circle" src="assets/img/team/2.jpg" alt="..." />
                             <h4>Elliot Bordrez</h4>
                             <p class="text-muted">Etudiant 2</p>
-                            <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Diana Petersen Twitter Profile"><i class="fab fa-twitter"></i></a>
-                            <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Diana Petersen Facebook Profile"><i class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Diana Petersen LinkedIn Profile"><i class="fab fa-linkedin-in"></i></a>
                         </div>
                     </div>
                     <div class="col-lg-4">
@@ -409,53 +400,11 @@ $tabPoulet = $Poulet->getAllPoulet();
                             <img class="mx-auto rounded-circle" src="assets/img/team/3.jpg" alt="..." />
                             <h4>Valentin Foure</h4>
                             <p class="text-muted">Etudiant 3</p>
-                            <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Larry Parker Twitter Profile"><i class="fab fa-twitter"></i></a>
-                            <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Larry Parker Facebook Profile"><i class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Larry Parker LinkedIn Profile"><i class="fab fa-linkedin-in"></i></a>
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-lg-8 mx-auto text-center"><p class="large text-muted">?</p></div>
-                </div>
             </div>
         </section>
-        <!-- Clients-->
-        <div class="py-5">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-md-3 col-sm-6 my-3">
-                        <a href="#!"><img class="img-fluid img-brand d-block mx-auto" src="assets/img/logos/microsoft.svg" alt="..." aria-label="Microsoft Logo" /></a>
-                    </div>
-                    <div class="col-md-3 col-sm-6 my-3">
-                        <a href="#!"><img class="img-fluid img-brand d-block mx-auto" src="assets/img/logos/google.svg" alt="..." aria-label="Google Logo" /></a>
-                    </div>
-                    <div class="col-md-3 col-sm-6 my-3">
-                        <a href="#!"><img class="img-fluid img-brand d-block mx-auto" src="assets/img/logos/facebook.svg" alt="..." aria-label="Facebook Logo" /></a>
-                    </div>
-                    <div class="col-md-3 col-sm-6 my-3">
-                        <a href="#!"><img class="img-fluid img-brand d-block mx-auto" src="assets/img/logos/ibm.svg" alt="..." aria-label="IBM Logo" /></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Footer-->
-        <footer class="footer py-4">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-lg-4 my-3 my-lg-0">
-                        <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                        <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                        <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
-                    <div class="col-lg-4 text-lg-end">
-                        <a class="link-dark text-decoration-none me-3" href="#!">Privacy Policy</a>
-                        <a class="link-dark text-decoration-none" href="#!">Terms of Use</a>
-                    </div>
-                </div>
-            </div>
-        </footer>
-        <!-- Portfolio Modals-->
         <!-- Portfolio item 1 modal popup-->
         <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog">
@@ -472,17 +421,14 @@ $tabPoulet = $Poulet->getAllPoulet();
                                     <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
                                     <ul class="list-inline">
                                         <li>
-                                            <strong>Client:</strong>
-                                            Threads
+                                            <strong>Client:</strong> Threads
                                         </li>
                                         <li>
-                                            <strong>Category:</strong>
-                                            Illustration
+                                            <strong>Category:</strong> Illustration
                                         </li>
                                     </ul>
                                     <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
-                                        <i class="fas fa-xmark me-1"></i>
-                                        Close Project
+                                        <i class="fas fa-xmark me-1"></i> Fermer
                                     </button>
                                 </div>
                             </div>
