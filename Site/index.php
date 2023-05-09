@@ -2,10 +2,6 @@
 include ("pdo.php");
 include ("user.php");
 include ("poulet.php");
-
-$User = new User(null,null,null);
-$Poulet = new Poulet(null,$_POST["poids"],$_POST["age"],$_POST["etat"],$_POST["marquage"]);
-$tabPoulet = $Poulet->getAllPoulet();
 ?>
 
 <!DOCTYPE html>
@@ -28,6 +24,11 @@ $tabPoulet = $Poulet->getAllPoulet();
     </head>
     <body id="page-top">
         <?php
+
+            $User = new User(null,null,null);
+            $Poulet = new Poulet(null,null,null,null,null);
+            $tabPoulets = $Poulet->getAllPoulet();
+            
             if(isset($_POST['connexion'])){
                 $User->seConnecter($_POST['login'],$_POST['password']);
             }
@@ -41,10 +42,6 @@ $tabPoulet = $Poulet->getAllPoulet();
             } 
 
             if(isset($_SESSION['connexion']) && $_SESSION['connexion']==true){
-        
-            if(isset($_POST["idPoulet"])){
-                $Poulet->setPouletById($_POST["idPoulet"]);
-            }
         ?>
         <!-- Navigation -->
         <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
@@ -68,7 +65,7 @@ $tabPoulet = $Poulet->getAllPoulet();
                 </div>
             </div>
         </nav>
-        <!-- Masthead-->
+        <!-- Masthead -->
         <header class="masthead">
             <div class="container">  
                 <div class="masthead-heading text-uppercase">Projet Ferme Industrielle du Moulin</div>
@@ -76,7 +73,7 @@ $tabPoulet = $Poulet->getAllPoulet();
                 <a class="btn btn-primary btn-xl text-uppercase" href="#create">Passer "A propos"</a>
             </div>
         </header>
-        <!-- About-->
+        <!-- About -->
         <section class="page-section" id="about">
             <div class="container">
                 <div class="text-center">
@@ -160,7 +157,8 @@ $tabPoulet = $Poulet->getAllPoulet();
                 </div>
                 <?php 
                     if(isset($_POST["CreatePoulet"])){
-                        $Poulet->saveInBDD();
+                        $newpoulet = new Poulet(null,$_POST["poids"],$_POST["age"],$_POST["etat"],$_POST["marquage"]);
+                        $newpoulet->saveInBDD();
                     }
                 ?>
                 <form action="" method="post">
@@ -208,11 +206,11 @@ $tabPoulet = $Poulet->getAllPoulet();
                     <h3 class="section-subheading text-muted">Veuillez entrer les modifications à effectuer</h3>
                 </div>
                 <?php
+                    if(isset($_POST["idPoulet"])){
+                        $Poulet->setPouletById($_POST["idPoulet"]);
+                    }
+                    
                     if(isset($_POST["UpdatePoulet"])){
-                        $Poulet->setPoids($_POST["poids"]);
-                        $Poulet->setAge($_POST["age"]);
-                        $Poulet->setEtat($_POST["etat"]);
-                        $Poulet->setMarquage($_POST["marquage"]);
                         $Poulet->saveInBDD();
                     }
                 ?>
@@ -222,7 +220,7 @@ $tabPoulet = $Poulet->getAllPoulet();
                             <select name="idPoulet" id="idPoulet">
                                 <option value="null"> - Choisir un poulet a modifier - </option>
                                     <?php
-                                        foreach($tabPoulet as $ThePoulet){
+                                        foreach($tabPoulets as $ThePoulet){
                                             if($Poulet->getId() == $ThePoulet->getId()){
                                                 $selected = "selected";
                                             }else{
@@ -272,7 +270,7 @@ $tabPoulet = $Poulet->getAllPoulet();
                     <h2 class="section-heading text-uppercase">Supprimer un poulet</h2>
                     <h3 class="section-subheading text-muted">Veuillez entrer l'id du poulet a supprimer</h3>
                 </div>
-                <?php     
+                <?php
                     if(isset($_POST["DeletePoulet"])){
                         $Poulet->deleteInBDD();
                     }  
@@ -282,30 +280,33 @@ $tabPoulet = $Poulet->getAllPoulet();
                         <div class="text-center">
                             <select name="idPoulet" id="idPoulet">
                                 <option value="null"> - Choisir un poulet a supprimer - </option>
-                <?php
-                    foreach($tabPoulet as $ThePoulet){
-                        if($Poulet->getId() == $ThePoulet){
-                            $selected = "selected";
-                        }else{
-                            $selected = "";
-                        }
-                        
-                        echo '<option '.$selected.' value="'.$ThePoulet->getId().'">'.$ThePoulet->getId().'</option>';
-                    }
-                ?>
-                </select>
-            </form>
+                                <?php
+                                    foreach($tabPoulets as $ThePoulet){
+                                        if($Poulet->getId() == $ThePoulet->getId()){
+                                            $selected = "selected";
+                                        }else{
+                                            $selected = "";
+                                        }
+                                        
+                                        echo '<option '.$selected.' value="'.$ThePoulet->getId().'">'.$ThePoulet->getId().'</option>';
+                                    }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+                </form>
 
-            <form action="" method="post">
-                <div class="row text-center">
-                    <div class="text-center">
-                        <input type="hidden" name="id" value="<?= $Poulet->getId() ?>">
+                <form action="" method="post">
+                    <div class="row text-center">
+                        <div class="text-center">
+                            <input type="hidden" name="id" value="<?= $Poulet->getId() ?>">
+                        </div>
+                        <div class="text-center">
+                            <input type="submit" class="btn btn-primary btn-xl rounded-pill mt-5" name="DeletePoulet" value="Supprimer">
+                        </div>
                     </div>
-                    <div class="text-center">
-                        <input type="submit" class="btn btn-primary btn-xl rounded-pill mt-5" name="DeletePoulet" value="Supprimer">
-                    </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </section>
         <!-- Capteurs -->
         <section class="page-section bg-light" id="portfolio">
@@ -415,18 +416,10 @@ $tabPoulet = $Poulet->getAllPoulet();
                             <div class="col-lg-8">
                                 <div class="modal-body">
                                     <!-- Project details-->
-                                    <h2 class="text-uppercase">Taux d'humidité</h2>
-                                    <p class="item-intro text-muted"><!-- Mesure Capteur Luminosité -->%</p>
+                                    <h2 class="text-uppercase">Humidité</h2>
+                                    <p class="item-intro text-muted"><!-- Mesure Capteur Humidité -->%</p>
                                     <img class="img-fluid d-block mx-auto" src="assets/img/portfolio/1.jpg" alt="..." />
-                                    <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
-                                    <ul class="list-inline">
-                                        <li>
-                                            <strong>Client:</strong> Threads
-                                        </li>
-                                        <li>
-                                            <strong>Category:</strong> Illustration
-                                        </li>
-                                    </ul>
+                                    <p><!-- Mesure Capteur Humidité -->%</p>
                                     <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
                                         <i class="fas fa-xmark me-1"></i> Fermer
                                     </button>
@@ -447,10 +440,10 @@ $tabPoulet = $Poulet->getAllPoulet();
                             <div class="col-lg-8">
                                 <div class="modal-body">
                                     <!-- Project details-->
-                                    <h2 class="text-uppercase">Taux de luminosité</h2>
-                                    <p class="item-intro text-muted"><!-- Mesure Capteur Humidté -->%</p>
+                                    <h2 class="text-uppercase">Luminosité</h2>
+                                    <p class="item-intro text-muted"><!-- Mesure Capteur Luminosité -->%</p>
                                     <img class="img-fluid d-block mx-auto" src="assets/img/portfolio/2.jpg" alt="..." />
-                                    <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
+                                    <p><!-- Mesure Capteur Luminosité -->%</p>
                                     <ul class="list-inline">
                                         <li>
                                             <strong>Client:</strong>
@@ -482,10 +475,10 @@ $tabPoulet = $Poulet->getAllPoulet();
                             <div class="col-lg-8">
                                 <div class="modal-body">
                                     <!-- Project details-->
-                                    <h2 class="text-uppercase">Project Name</h2>
-                                    <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
+                                    <h2 class="text-uppercase">Température</h2>
+                                    <p class="item-intro text-muted"><!-- Mesure Capteur Température -->°C</p>
                                     <img class="img-fluid d-block mx-auto" src="assets/img/portfolio/3.jpg" alt="..." />
-                                    <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
+                                    <p><!-- Mesure Capteur Température -->°C</p>
                                     <ul class="list-inline">
                                         <li>
                                             <strong>Client:</strong>
@@ -517,10 +510,10 @@ $tabPoulet = $Poulet->getAllPoulet();
                             <div class="col-lg-8">
                                 <div class="modal-body">
                                     <!-- Project details-->
-                                    <h2 class="text-uppercase">Project Name</h2>
-                                    <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
+                                    <h2 class="text-uppercase">Présence</h2>
+                                    <p class="item-intro text-muted"><!-- Présence -->!</p>
                                     <img class="img-fluid d-block mx-auto" src="assets/img/portfolio/4.jpg" alt="..." />
-                                    <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
+                                    <p><!-- Présence --></p>
                                     <ul class="list-inline">
                                         <li>
                                             <strong>Client:</strong>

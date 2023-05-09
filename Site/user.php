@@ -12,7 +12,7 @@
         }
 
         public function seConnecter($login,$password){
-            $requestSql = "SELECT * FROM `user`
+            $requestSql = "SELECT * FROM `User`
                 WHERE
                 `login` = '".$login."'
                 AND

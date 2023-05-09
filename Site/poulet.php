@@ -16,22 +16,22 @@
         }
 
         public function getAllPoulet(){
-            $ListPoulet = array();
+            $ListPoulets = array();
 
-            $requestSql = "SELECT * FROM `poulet`";
+            $requestSql = "SELECT * FROM `Poulet`";
             
             $resultat = $GLOBALS["pdo"]->query($requestSql);
 
             while($tab = $resultat->fetch()){
                 $poulet = new Poulet($tab['id'],$tab['poids'],$tab['age'],$tab['etat'],$tab['marquage']);
-                array_push($ListPoulet,$poulet);
+                array_push($ListPoulets,$poulet);
             }
 
-            return $ListPoulet;
+            return $ListPoulets;
         }
 
         public function setPouletById($id){
-            $requestSql = "SELECT * FROM `poulet`
+            $requestSql = "SELECT * FROM `Poulet`
                 WHERE `id` = '".$id."'";
             
             $resultat = $GLOBALS["pdo"]->query($requestSql);
@@ -47,7 +47,7 @@
         }
         
         public function lastInsertId(){
-            //
+            return $GLOBALS["pdo"]->lastInsertId();
         }
 
         public function saveInBDD(){
@@ -58,7 +58,7 @@
             $marquage = addslashes($this->marquage_);
 
             if(is_null($this->id_)){
-                $requestSql = "INSERT INTO `poulet` 
+                $requestSql = "INSERT INTO `Poulet` 
                 (`poids`,`age`,`etat`,`marquage`)
                 VALUES
                 ('".$poids."','".$age."','".$etat."','".$marquage."')";
@@ -66,29 +66,30 @@
                 $resultat = $GLOBALS["pdo"]->query($requestSql);
                 $this->id_ = $GLOBALS["pdo"]->lastInsertId();
             }else{
-                $requestSql = "UPDATE `poulet` SET 
+                $requestSql = "UPDATE `Poulet` SET 
                 `poids`='".$poids."',
                 `age`='".$age."',
                 `etat`='".$etat."',
                 `marquage`='".$marquage."'
                 WHERE
                 `id` ='".$this->id_."'";
+
                 $resultat = $GLOBALS["pdo"]->query($requestSql);
             }
         }
 
         public function deleteInBDD(){
             if(!is_null($this->id_)){
-                $requestSql = "DELETE FROM `poulet` 
+                $requestSql = "DELETE FROM `Poulet` 
                 WHERE
-                id ='".$this->$id_."'";
-
+                id ='".$this->id_."'";
+        
                 $GLOBALS["pdo"]->query($requestSql);
             }
         }
 
-        public function renderHTML(){ 
-            $requestSql = "SELECT * FROM `poulet`";
+        public function renderHTML(){
+            $requestSql = "SELECT * FROM `Poulet`";
             $resultat = $GLOBALS["pdo"]->query($requestSql);
             
             ?>
