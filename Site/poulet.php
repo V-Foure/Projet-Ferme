@@ -100,7 +100,7 @@
                     <tr>
                         <th>Id</th>
                         <th>Poids</th>
-                        <th>Age</th>
+                        <th>Age (jour)</th>
                         <th>Etat</th>
                         <th>Marquage</th>
                     </tr>

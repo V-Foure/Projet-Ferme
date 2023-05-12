@@ -52,12 +52,13 @@ include ("poulet.php");
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-                        <li class="nav-item"><a class="nav-link" href="#about">A propos</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#create">Créer un poulet</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#read">Voir les poulets</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#update">Modifier un poulet</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#delete">Supprimer un poulet</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#portfolio">Capteurs</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#about"><center>A propos</center></a></li>
+                        <li class="nav-item"><a class="nav-link" href="#create"><center>Créer un poulet</center></a></li>
+                        <li class="nav-item"><a class="nav-link" href="#read"><center>Voir les poulets</center></a></li>
+                        <li class="nav-item"><a class="nav-link" href="#update"><center>Modifier un poulet</center></a></li>
+                        <li class="nav-item"><a class="nav-link" href="#delete"><center>Supprimer un poulet</center></a></li>
+                        <li class="nav-item"><a class="nav-link" href="#portfolio"><center>Capteurs</center></a></li>
+                        <li class="nav-item"><a class="nav-link" href="#team"><center>Equipe du projet</center></a></li>
                         <form action="" method="post">
                             <input class="btn btn-primary" type ="submit" name ="deconnexion" value="Deconnexion"/>
                         </form>
@@ -130,7 +131,7 @@ include ("poulet.php");
                             </div>
                         </div>
                     </li>
-                    <!-- About 4 -->
+                    <!-- A propos 4 -->
                     <li class="timeline-inverted">
                         <div class="timeline-image"><img class="rounded-circle img-fluid" src="assets/img/about/4.jpg" alt="..." /></div>
                         <div class="timeline-panel">
@@ -148,6 +149,8 @@ include ("poulet.php");
                 </ul>
             </div>
         </section>
+        <!-- hr -->
+        <hr>
         <!-- Create -->
         <section class="page-section" id="create">
             <div class="container">
@@ -186,6 +189,8 @@ include ("poulet.php");
                 </form>
             </div>
         </section>
+        <!-- hr -->
+        <hr>
         <!-- Read -->
         <section class="page-section" id="read">
             <div class="container">
@@ -198,6 +203,8 @@ include ("poulet.php");
                 $Poulet->renderHTML();
             ?>
         </section>
+        <!-- hr -->
+        <hr>
         <!-- Update -->
         <section class="page-section" id="update">
             <div class="container">
@@ -268,6 +275,8 @@ include ("poulet.php");
                 </form>
             </div>
         </section>
+        <!-- hr -->
+        <hr>
         <!-- Delete -->
         <section class="page-section" id="delete">
             <div class="container">
@@ -277,6 +286,7 @@ include ("poulet.php");
                 </div>
                 <?php
                     if(isset($_POST["DeletePoulet"])){
+                        $Poulet->setPouletById($_POST["id"]);
                         $Poulet->deleteInBDD();
                     }
                 ?>    
@@ -322,7 +332,7 @@ include ("poulet.php");
                 </div>
                 <div class="row">
                     <div class="col-lg-4 col-sm-6 mb-4">
-                    <!-- Capteur humidité-->
+                    <!-- Capteur humidité -->
                     <div class="portfolio-item">
                         <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1">
                             <div class="portfolio-hover">
@@ -336,6 +346,29 @@ include ("poulet.php");
                         </div>
                     </div>
                     <div class="col-lg-4 col-sm-6 mb-4">
+                    <!-- Capteur humidité popup -->
+                    <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg" alt="Close modal" /></div>
+                                <div class="container">
+                                    <div class="row justify-content-center">
+                                        <div class="col-lg-8">
+                                            <div class="modal-body">
+                                                <!-- Project details -->
+                                                <h2 class="text-uppercase">Humidité</h2>
+                                                <p class="item-intro text-muted"><!-- Mesure Capteur Humidité -->%</p>
+                                                <img class="img-fluid d-block mx-auto" src="assets/img/portfolio/1.jpg" alt="..." />
+                                                <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
+                                                    Fermer la page <i class="fas fa-xmark me-1"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <!-- Capteur luminosité -->
                     <div class="portfolio-item">
                         <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal2">
@@ -350,6 +383,29 @@ include ("poulet.php");
                         </div>
                     </div>
                     <div class="col-lg-4 col-sm-6 mb-4">
+                    <!-- Capteur luminosité popup -->
+                    <div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg" alt="Close modal" /></div>
+                                <div class="container">
+                                    <div class="row justify-content-center">
+                                        <div class="col-lg-8">
+                                            <div class="modal-body">
+                                                <!-- Project details -->
+                                                <h2 class="text-uppercase">Luminosité</h2>
+                                                <p class="item-intro text-muted"><!-- Mesure Capteur Luminosité -->%</p>
+                                                <img class="img-fluid d-block mx-auto" src="assets/img/portfolio/2.jpg" alt="..." />
+                                                <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
+                                                    Fermer la page <i class="fas fa-xmark me-1"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <!-- Capteur température -->
                     <div class="portfolio-item">
                         <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal3">
@@ -364,6 +420,29 @@ include ("poulet.php");
                         </div>
                     </div>
                     <div class="col-lg-4 col-sm-6 mb-4 mb-lg-0">
+                    <!-- Capteur température popup -->
+                    <div class="portfolio-modal modal fade" id="portfolioModal3" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg" alt="Close modal" /></div>
+                                <div class="container">
+                                    <div class="row justify-content-center">
+                                        <div class="col-lg-8">
+                                            <div class="modal-body">
+                                                <!-- Project details -->
+                                                <h2 class="text-uppercase">Température</h2>
+                                                <p class="item-intro text-muted"><!-- Mesure Capteur Température -->°C</p>
+                                                <img class="img-fluid d-block mx-auto" src="assets/img/portfolio/3.jpg" alt="..." />
+                                                <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
+                                                    Fermer la page <i class="fas fa-xmark me-1"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <!-- Capteur présence -->
                     <div class="portfolio-item">
                         <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal4">
@@ -378,8 +457,31 @@ include ("poulet.php");
                     </div>
                 </div>
             </div>
+            <!-- Capteur présence popup -->
+            <div class="portfolio-modal modal fade" id="portfolioModal4" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg" alt="Close modal" /></div>
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-8">
+                                    <div class="modal-body">
+                                        <!-- Project details -->
+                                        <h2 class="text-uppercase">Présence</h2>
+                                        <p class="item-intro text-muted"><!-- Présence -->!</p>
+                                        <img class="img-fluid d-block mx-auto" src="assets/img/portfolio/4.jpg" alt="..." />
+                                        <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
+                                            Fermer la page <i class="fas fa-xmark me-1"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
-        <!-- Team-->
+        <!-- Team -->
         <section class="page-section bg-light" id="team">
             <div class="container">
                 <div class="text-center">
@@ -389,21 +491,18 @@ include ("poulet.php");
                 <div class="row">
                     <div class="col-lg-4">
                         <div class="team-member">
-                            <img class="mx-auto rounded-circle" src="assets/img/team/1.jpg" alt="..." />
                             <h4>Mathys Dechir</h4>
                             <p class="text-muted">Etudiant 1</p>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="team-member">
-                            <img class="mx-auto rounded-circle" src="assets/img/team/2.jpg" alt="..." />
                             <h4>Elliot Bordrez</h4>
                             <p class="text-muted">Etudiant 2</p>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="team-member">
-                            <img class="mx-auto rounded-circle" src="assets/img/team/3.jpg" alt="..." />
                             <h4>Valentin Foure</h4>
                             <p class="text-muted">Etudiant 3</p>
                         </div>
@@ -411,143 +510,14 @@ include ("poulet.php");
                 </div>
             </div>
         </section>
-        <!-- Portfolio item 1 modal popup-->
-        <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg" alt="Close modal" /></div>
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-8">
-                                <div class="modal-body">
-                                    <!-- Project details-->
-                                    <h2 class="text-uppercase">Humidité</h2>
-                                    <p class="item-intro text-muted"><!-- Mesure Capteur Humidité -->%</p>
-                                    <img class="img-fluid d-block mx-auto" src="assets/img/portfolio/1.jpg" alt="..." />
-                                    <p><!-- Mesure Capteur Humidité -->%</p>
-                                    <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
-                                        <i class="fas fa-xmark me-1"></i> Fermer
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Portfolio item 2 modal popup-->
-        <div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg" alt="Close modal" /></div>
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-8">
-                                <div class="modal-body">
-                                    <!-- Project details-->
-                                    <h2 class="text-uppercase">Luminosité</h2>
-                                    <p class="item-intro text-muted"><!-- Mesure Capteur Luminosité -->%</p>
-                                    <img class="img-fluid d-block mx-auto" src="assets/img/portfolio/2.jpg" alt="..." />
-                                    <p><!-- Mesure Capteur Luminosité -->%</p>
-                                    <ul class="list-inline">
-                                        <li>
-                                            <strong>Client:</strong>
-                                            Explore
-                                        </li>
-                                        <li>
-                                            <strong>Category:</strong>
-                                            Graphic Design
-                                        </li>
-                                    </ul>
-                                    <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
-                                        <i class="fas fa-xmark me-1"></i>
-                                        Close Project
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Portfolio item 3 modal popup-->
-        <div class="portfolio-modal modal fade" id="portfolioModal3" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg" alt="Close modal" /></div>
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-8">
-                                <div class="modal-body">
-                                    <!-- Project details-->
-                                    <h2 class="text-uppercase">Température</h2>
-                                    <p class="item-intro text-muted"><!-- Mesure Capteur Température -->°C</p>
-                                    <img class="img-fluid d-block mx-auto" src="assets/img/portfolio/3.jpg" alt="..." />
-                                    <p><!-- Mesure Capteur Température -->°C</p>
-                                    <ul class="list-inline">
-                                        <li>
-                                            <strong>Client:</strong>
-                                            Finish
-                                        </li>
-                                        <li>
-                                            <strong>Category:</strong>
-                                            Identity
-                                        </li>
-                                    </ul>
-                                    <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
-                                        <i class="fas fa-xmark me-1"></i>
-                                        Close Project
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Portfolio item 4 modal popup-->
-        <div class="portfolio-modal modal fade" id="portfolioModal4" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg" alt="Close modal" /></div>
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-8">
-                                <div class="modal-body">
-                                    <!-- Project details-->
-                                    <h2 class="text-uppercase">Présence</h2>
-                                    <p class="item-intro text-muted"><!-- Présence -->!</p>
-                                    <img class="img-fluid d-block mx-auto" src="assets/img/portfolio/4.jpg" alt="..." />
-                                    <p><!-- Présence --></p>
-                                    <ul class="list-inline">
-                                        <li>
-                                            <strong>Client:</strong>
-                                            Lines
-                                        </li>
-                                        <li>
-                                            <strong>Category:</strong>
-                                            Branding
-                                        </li>
-                                    </ul>
-                                    <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
-                                        <i class="fas fa-xmark me-1"></i>
-                                        Close Project
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Bootstrap core JS-->
+        <!-- Bootstrap core JS -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
+        <!-- Core theme JS -->
         <script src="js/scripts.js"></script>
-        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-        <!-- * *                               SB Forms JS                               * *-->
-        <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
-        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+        <!-- * *                               SB Forms JS                               * * -->
+        <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * * -->
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
         <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
         <?php
             }else{
