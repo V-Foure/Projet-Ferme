@@ -1,11 +1,28 @@
+int potentiometre = 0;
+int temperature = 0;
+
 void setup()
 {
- Serial.begin(9600); // open serial port, set the baud rate to 9600 bps
+  
+  pinMode(11, OUTPUT);
+  Serial.begin(9600);
+
 }
+
 void loop()
 {
- int val;
- val=analogRead(0); //connect grayscale sensor to Analog 0
- Serial.println(val,DEC);//print the value to serial
- delay(100);
-}
+  potentiometre = analogRead(A2);
+  temperature = map(potentiometre, 0, 1023, 0, 23);
+  Serial.print("temperature = ");
+  Serial.println(temperature);
+   delay(100);
+   if (temperature >= 0 && temperature < 17) { 
+
+// On allume quand la valeur du potentiomètre est comprise entre 9 et 19 sinon on éteint.
+   
+ digitalWrite(11, HIGH);
+  } 
+  else {
+    digitalWrite(11, LOW);
+  }
+ }
