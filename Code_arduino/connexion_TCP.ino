@@ -90,12 +90,14 @@ void getJSON_DataFromSensors(char *sDataFromSensors)
   int lightValue = analogRead(lightSensorPin); // Lecture de la valeur du capteur de lumière
   jsonDocument["lightValue"] = lightValue; // Ajout de la valeur du capteur de lumière à l'objet JSON
 
+  jsonString = ""; // Réinitialise la chaîne de caractères JSON
+
   serializeJson(jsonDocument, jsonString);
 
   Serial.println(jsonString); // Affichage de la chaîne de caractères JSON sur le moniteur série
 
   delay(1000); // Attente de 1 seconde
 
-  // Une structure JSON se termine par une accolade
-  strcat(sDataFromSensors, jsonString.c_str());
+  // Copie la chaîne de caractères JSON dans sDataFromSensors
+  strcpy(sDataFromSensors, jsonString.c_str());
 }
