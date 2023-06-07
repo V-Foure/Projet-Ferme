@@ -4,7 +4,7 @@ int temperature = 0;
 void setup()
 {
   
-  pinMode(11, OUTPUT);
+  pinMode(9, OUTPUT);
   Serial.begin(9600);
 
 }
@@ -20,9 +20,9 @@ void loop()
 
 // On allume quand la valeur du potentiomètre est comprise entre 9 et 19 sinon on éteint.
    
- digitalWrite(11, HIGH);
+ digitalWrite(9, HIGH);
   } 
   else {
-    digitalWrite(11, LOW);
+    digitalWrite(9, LOW);
   }
  }
