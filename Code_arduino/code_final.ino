@@ -24,10 +24,7 @@ void setup()
 {
   Serial.begin(9600);
   
-  pinMode(A0, INPUT);
-  analogWrite(A0, LOW);
   pinMode(ledPin, OUTPUT);
-
   pinMode(9, OUTPUT);
   
   Ethernet.begin(mac, ip);       // Initialise l'Arduino comme un élément du réseau local
