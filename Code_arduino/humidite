@@ -1,0 +1,28 @@
+int potentiometre = 0;
+int humidite = 0;
+
+void setup()
+{
+  
+  pinMode(11, OUTPUT);
+  Serial.begin(9600);
+
+}
+
+void loop()
+{
+  potentiometre = analogRead(A3);
+  humidite = map(potentiometre, 0, 1100, 0, 100);
+  Serial.print("humidite = ");
+  Serial.println(humidite);
+   delay(100);
+   if (humidite > 60 && humidite <= 100) { 
+
+// On allume quand la valeur du potentiomètre est comprise entre 60 et 19 sinon on éteint.
+   
+ digitalWrite(11, HIGH);
+  } 
+  else {
+    digitalWrite(11, LOW);
+  }
+ }
