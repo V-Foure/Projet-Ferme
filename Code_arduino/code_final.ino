@@ -2,23 +2,26 @@
 #include <Ethernet.h>
 #include <ArduinoJson.h>
 
-// Elements pour les potentiometre
-const int potentiometerPin = A2; // Broche analogique du potentiomètre
+// Elements pour les potentiometres
+const int potentiometerPin = A2; // Broche analogique du premier potentiomètre
+const int potentiometer2Pin = A3; // Broche analogique du deuxième potentiomètre
 const int jsonCapacity = JSON_OBJECT_SIZE(20); // Taille maximale de la chaîne de caractères JSON
 DynamicJsonDocument jsonDocument(jsonCapacity); // Déclaration de l'objet JSON
 
 // Elements pour le capteur de luminosité
 const int lightSensorPin = A0; // Broche analogique du capteur de lumière
 
-// Elements pour la connection ethernet (serveur web)
+// Elements pour la connexion Ethernet (serveur web)
 byte mac[] = {0xA8, 0x61, 0x0A, 0xAE, 0x75, 0x24};
 IPAddress ip(192, 168, 64, 5); // Adresse IP du serveur web de l'Arduino sur le réseau local
 EthernetServer local_server(80); // Crée un serveur web sur le port standard 80
 
-const int ledPin = 8; // Broche de la LED
+const int ledPin = 8; // Broche de la LED lumière
 
 int potentiometre = 0;
+int potentiometre2 = 0;
 int temperature = 0;
+int humidite = 0;
 
 void setup()
 {
@@ -26,16 +29,17 @@ void setup()
   
   pinMode(ledPin, OUTPUT);
   pinMode(9, OUTPUT);
+  pinMode(7, OUTPUT);
   
   Ethernet.begin(mac, ip);       // Initialise l'Arduino comme un élément du réseau local
-  local_server.begin();          // Se met à l'écoute des communications client (browser web)
+  local_server.begin();          // Se met à l'écoute des communications client (navigateur web)
 }
 
 void loop()
 {
   respond_local_server();
 
-  potentiometre = analogRead(A2);
+  potentiometre = analogRead(potentiometerPin);
   temperature = map(potentiometre, 0, 1023, 0, 23);
   Serial.println(temperature);
 
@@ -43,6 +47,16 @@ void loop()
     digitalWrite(9, HIGH);
   } else {
     digitalWrite(9, LOW);
+  }
+
+  potentiometre2 = analogRead(potentiometer2Pin);
+  humidite = map(potentiometre2, 0, 1100, 0, 100);
+  Serial.println(humidite);
+
+  if (humidite > 60 && humidite <= 100) {
+    digitalWrite(7, HIGH);
+  } else {
+    digitalWrite(7, LOW);
   }
 
   int light = analogRead(A0);
@@ -57,7 +71,7 @@ void loop()
     digitalWrite(ledPin, HIGH);
   }
 
-  delay(500); // Attente de 0.5 secondes entre chaque envoi de données
+  delay(500); // Attente de 0.5 seconde entre chaque envoi de données
 }
 
 void respond_local_server()
@@ -72,7 +86,7 @@ void respond_local_server()
       if (local_client.available()) // Si un client a envoyé une requête
       {
         char c = local_client.read(); // Lire un caractère du client
-        if (c == '\n' && currentLineIsBlank) // Quand la dernière ligne envoyée par le client est vide et suivi de \n on va lui répondre
+        if (c == '\n' && currentLineIsBlank) // Quand la dernière ligne envoyée par le client est vide et suivi de \n, on va lui répondre
         {
           // On envoie un entête HTTP standard en réponse
           local_client.println("HTTP/1.1 200 OK");
@@ -108,10 +122,15 @@ void getJSON_DataFromSensors(char *sDataFromSensors)
   // Réinitialise l'objet JSON
   jsonDocument.clear();
 
-  // Conversion de la valeur du potentiomètre en degrés
-  int potentiometerValue = analogRead(potentiometerPin); // Lecture de la valeur du potentiomètre
+  // Conversion de la valeur du premier potentiomètre en degrés
+  int potentiometerValue = analogRead(potentiometerPin); // Lecture de la valeur du premier potentiomètre
   float potentiometerDegrees = map(potentiometerValue, 0, 1023, 0, 23); // Mise à l'échelle de 0 à 23
-  jsonDocument["potentiometerValue"] = potentiometerDegrees; // Ajout de la valeur du potentiomètre en degrés à l'objet JSON
+  jsonDocument["potentiometerValue"] = potentiometerDegrees; // Ajout de la valeur du premier potentiomètre en degrés à l'objet JSON
+
+  // Conversion de la valeur du deuxième potentiomètre en degrés
+  int potentiometer2Value = analogRead(potentiometer2Pin); // Lecture de la valeur du deuxième potentiomètre
+  float potentiometer2Degrees = map(potentiometer2Value, 0, 1100, 0, 100); // Mise à l'échelle de 0 à 100
+  jsonDocument["potentiometer2Value"] = potentiometer2Degrees; // Ajout de la valeur du deuxième potentiomètre en degrés à l'objet JSON
 
   String jsonString; // Conversion de l'objet JSON en chaîne de caractères
   serializeJson(jsonDocument, jsonString);
@@ -136,3 +155,4 @@ void getJSON_DataFromSensors(char *sDataFromSensors)
   // Copie la chaîne de caractères JSON dans sDataFromSensors
   strcpy(sDataFromSensors, jsonString.c_str());
 }
+
