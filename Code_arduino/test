@@ -3,63 +3,85 @@
 #include <ArduinoJson.h>
 
 // Elements pour les potentiometres
-const int potentiometerPin = A2; // Broche analogique du premier potentiomètre
-const int potentiometer2Pin = A3; // Broche analogique du deuxième potentiomètre
+const int LuminositePin = A0; // Broche analogique du capteur de lumière
+const int TemperaturePotentiometrePin = A2; // Broche analogique du premier potentiomètre
+const int HumiditePotentiometrePin = A3; // Broche analogique du deuxième potentiomètre
 const int jsonCapacity = JSON_OBJECT_SIZE(20); // Taille maximale de la chaîne de caractères JSON
 DynamicJsonDocument jsonDocument(jsonCapacity); // Déclaration de l'objet JSON
-
-// Elements pour le capteur de luminosité
-const int lightSensorPin = A0; // Broche analogique du capteur de lumière
 
 // Elements pour la connexion Ethernet (serveur web)
 byte mac[] = {0xA8, 0x61, 0x0A, 0xAE, 0x75, 0x24};
 IPAddress ip(192, 168, 64, 5); // Adresse IP du serveur web de l'Arduino sur le réseau local
 EthernetServer local_server(80); // Crée un serveur web sur le port standard 80
 
-const int ledPin = 8; // Broche de la LED
+const int LuminositeLedPin = 8; // Broche de la LED pour le capteur de luminosité
+const int TemperatureLedPin = 9; // Broche de la LED pour le capteur de température
+const int HumiditeLedPin = 11; // Broche de la LED pour le capteur d'humidité
 
-int potentiometre = 0;
-int potentiometre2 = 0;
-int temperature = 0;
+int Luminosite = 0; //Valeur du capteur de luminosite à 0
+int TemperaturePotentiometre = 0; //Valeur du potensiomètre de température à 0
+int Temperature = 0; //Valeur de la température à 0
+int HumiditePotentiometre = 0; //Valeur de l'humidté à 0
+int Humidite = 0; //Valeur de l'humidité à 0
 
 void setup()
 {
-  Serial.begin(9600);
-  
-  pinMode(ledPin, OUTPUT);
-  pinMode(9, OUTPUT);
-  
+  pinMode(LuminositeledPin, OUTPUT);
+  pinMode(TemperatureledPin, OUTPUT);
+  pinMode(HumiditeledPin, OUTPUT);
   Ethernet.begin(mac, ip);       // Initialise l'Arduino comme un élément du réseau local
   local_server.begin();          // Se met à l'écoute des communications client (navigateur web)
+  Serial.begin(9600);
 }
 
 void loop()
 {
   respond_local_server();
+  
+  //Luminosite
+  Luminosite = analogRead(LuminositePin);
+  Serial.print("Luminosite = ");
+  Serial.println(Luminosite);
+  delay(100);
 
-  potentiometre = analogRead(potentiometerPin);
-  temperature = map(potentiometre, 0, 1023, 0, 23);
-  Serial.println(temperature);
-
-  potentiometre2 = analogRead(potentiometer2Pin);
-
-  if (temperature >= 0 && temperature < 17) {
-    digitalWrite(9, HIGH);
-  } else {
-    digitalWrite(9, LOW);
-  }
-
-  int light = analogRead(A0);
-  Serial.println(light);
-
-  if (light > 20)
+  if (Luminosite > 20)
   {
-    digitalWrite(ledPin, LOW);
+    digitalWrite(LuminositeLedPin, LOW);
   }
   else
   {
-    digitalWrite(ledPin, HIGH);
+    digitalWrite(LuminositeLedPin, HIGH);
   }
+
+  //Temperature
+  TemperaturePotentiometre = analogRead(TemperaturePotentiometrePin);
+  
+  Temperature = map(TemperaturePotentiometre, 0, 1023, 0, 23);
+  Serial.print("Temperature = ");
+  Serial.println(Temperature);
+  delay(100);
+
+  if (Temperature >= 0 && Temperature < 17) {
+    digitalWrite(TemperatureLedPin, HIGH);
+  } else {
+    digitalWrite(TemperatureLedPin, LOW);
+  }
+  
+  //Humidite
+  HumiditePotentiometre = analogRead(HumiditePotentiometrePin);
+  
+  Humidite = map(HumiditePotentiometre, 0, 1100, 0, 100);
+  Serial.print("Humidite = ");
+  Serial.println(Humidite);
+  delay(100);
+   
+   if (Humidite > 60 && Humidite <= 100) { 
+    digitalWrite(HumiditeLedPin, HIGH);
+    } 
+    else {
+    digitalWrite(HumiditeLedPin, LOW);
+    }
+ }
 
   delay(500); // Attente de 0.5 seconde entre chaque envoi de données
 }
