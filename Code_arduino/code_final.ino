@@ -127,7 +127,7 @@ void getJSON_DataFromSensors(char *sDataFromSensors)
   float potentiometerDegrees = map(potentiometerValue, 0, 1023, 0, 23); // Mise à l'échelle de 0 à 23
   jsonDocument["potentiometerValue"] = potentiometerDegrees; // Ajout de la valeur du premier potentiomètre en degrés à l'objet JSON
 
-  // Conversion de la valeur du deuxième potentiomètre en degrés
+  // Conversion de la valeur du deuxième potentiomètre
   int potentiometer2Value = analogRead(potentiometer2Pin); // Lecture de la valeur du deuxième potentiomètre
   float potentiometer2Degrees = map(potentiometer2Value, 0, 1100, 0, 100); // Mise à l'échelle de 0 à 100
   jsonDocument["potentiometer2Value"] = potentiometer2Degrees; // Ajout de la valeur du deuxième potentiomètre en degrés à l'objet JSON
@@ -137,11 +137,9 @@ void getJSON_DataFromSensors(char *sDataFromSensors)
 
   Serial.println(jsonString); // Affichage de la chaîne de caractères JSON sur le moniteur série
 
-  //delay(1000); // Attente de 1 seconde
-
-  // Conversion de la valeur du capteur de lumière en degrés
+  // Conversion de la valeur du capteur de lumière 
   int lightValue = analogRead(lightSensorPin); // Lecture de la valeur du capteur de lumière
-  float lightDegrees = map(lightValue, 0, 1040, 0, 40); // Mise à l'échelle de 0 à 23
+  float lightDegrees = map(lightValue, 0, 1040, 0, 40); // Mise à l'échelle de 0 à 40
   jsonDocument["lightValue"] = lightDegrees; // Ajout de la valeur du capteur de lumière en degrés à l'objet JSON
 
   jsonString = ""; // Réinitialise la chaîne de caractères JSON
@@ -149,8 +147,6 @@ void getJSON_DataFromSensors(char *sDataFromSensors)
   serializeJson(jsonDocument, jsonString);
 
   Serial.println(jsonString); // Affichage de la chaîne de caractères JSON sur le moniteur série
-
-  //delay(1000); // Attente de 1 seconde
 
   // Copie la chaîne de caractères JSON dans sDataFromSensors
   strcpy(sDataFromSensors, jsonString.c_str());
